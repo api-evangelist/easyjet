@@ -24,9 +24,19 @@ easyJet Airline Company Limited is a British low-cost short-haul carrier registe
 
 ## APIs
 
-No easyJet API is publicly documented, so `apis[]` is intentionally empty.
+"the easyJet API" is named in easyJet's own Distribution Charter and is demonstrably in production — fourteen approved aggregators sell easyJet flights and ancillaries against it — but easyJet publishes no reference documentation, no OpenAPI or Swagger definition, no AsyncAPI or GraphQL schema, no authentication metadata and no rate limits. Two real API hostnames exist, `api.easyjet.com` and `b2b.easyjet.com`; both are fronted by Akamai and return HTTP 403 "Access Denied" on every path probed. Listing either as an API would be fabrication, so neither is listed.
 
-"the easyJet API" is named in easyJet's own Distribution Charter and is demonstrably in production — fourteen approved aggregators sell easyJet flights and ancillaries against it — but easyJet publishes no reference documentation, no OpenAPI or Swagger definition, no AsyncAPI or GraphQL schema, no authentication metadata and no rate limits. Two real API hostnames exist, `api.easyjet.com` and `b2b.easyjet.com`; both are fronted by Akamai and return HTTP 403 "Access Denied" on every path probed. Listing either as an API would be fabrication.
+One surface **is** listed, found on the second enrichment pass (2026-07-28):
+
+- **easyJet Brand Widget Service (easyDom)** — `https://brand.easyjet.com/en/`. easyJet's hosted client-side widget platform for partner and white-label sites. `Header.js` and `Footer.js` answer anonymously with HTTP 200 and real JavaScript; `Script.js`, `SignIn.js`, `Registration.js` and `VRPanel.js` are partner-scoped by a `partner` query-string identifier and return a zero-byte body to an unrecognised caller. Behind them sits the `easyDom` library — `AuthenticationControl`, `AuthenticationHandler`, `RegistrationControl`, three authentication methods (Redirect, Dialog, Embedded), two styles (Classic, Modern), thirteen callback events and a `{Success, Result, ReturnUri, ErrorMessage}` result envelope. It is undocumented, unversioned, unsupported and built on jQuery 1.7.2, and it is not a data API — no flight search, booking or ancillary operation is exposed. It is nonetheless the only easyJet interface that answers a stranger with a 200, and the parameter and callback contract in [`components/easyjet-components.yml`](components/easyjet-components.yml) was read verbatim off easyJet's own publicly indexed sample partner implementation rather than inferred.
+
+## Artifacts
+
+- [`components/easyjet-components.yml`](components/easyjet-components.yml) — the easyWidget / easyDom component catalogue: hosts, widgets, parameters, library objects, events, result envelope, observed authentication model and gaps.
+- [`conformance/easyjet-conformance.yml`](conformance/easyjet-conformance.yml) — standards posture. Fifteen standards assessed, recorded as verified negative or unknown evidence: no NDC, no OpenTravel/OTA, no OpenAPI, no GraphQL, no AsyncAPI, no WSDL, no RFC 9457, no RFC 9116, no RFC 9727, no llms.txt, no MCP; OAuth2 and OIDC unknowable because the hosts 403 before any metadata is served.
+- [`security/easyjet-domain-security.yml`](security/easyjet-domain-security.yml) — TLS, HSTS, DNSSEC, CAA, SPF and DMARC across six easyJet hosts. TLS 1.3 everywhere, HSTS nowhere, no DNSSEC and no CAA, DMARC at `p=reject` with `sp=reject`.
+- [`well-known/easyjet-well-known.yml`](well-known/easyjet-well-known.yml) — the `/.well-known/` probe record across five hosts. Zero documents found.
+- [`llms/easyjet-llms.txt`](llms/easyjet-llms.txt) — generated llms.txt (easyJet serves none; `/llms.txt` is a 404).
 
 ## Distribution
 
@@ -71,6 +81,8 @@ Full evidence, including every URL probed with its HTTP status and the verbatim 
 - [Acceptable use policy](https://www.easyjet.com/en/policy/acceptable-use)
 - [Privacy notice](https://www.easyjet.com/en/policy/privacy)
 - [Terms and conditions](https://www.easyjet.com/en/terms-and-conditions)
+- [Help Centre](https://www.easyjet.com/en/help)
+- [Create a myeasyJet account](https://www.easyjet.com/en/register)
 - [Business fares](https://www.easyjet.com/en/business/business-fares)
 - [LinkedIn](https://www.linkedin.com/company/easyjet)
 - [Careers](https://careers.easyjet.com/)

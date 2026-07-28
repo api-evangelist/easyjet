@@ -1,0 +1,166 @@
+generated: '2026-07-28'
+method: searched
+source: >-
+  Live anonymous HTTP probes of https://brand.easyjet.com/en/ and easyJet's own
+  publicly indexed partner sample implementation at
+  https://sample-internal-test.easyjet.com/ApiTest.aspx (2026-07-28)
+name: easyWidget / easyDom partner component platform
+status: undocumented-but-live
+summary: >-
+  easyJet ships no REST or GraphQL contract, but it does operate a real, live,
+  publicly reachable CLIENT-SIDE integration surface: a hosted JavaScript widget
+  platform that partner and white-label sites embed to render easyJet chrome and
+  to run easyJet customer sign-in, registration and visitor recognition inside a
+  partner page. The library namespace is easyDom; the delivery host is
+  brand.easyjet.com; each widget is a script tag whose behaviour is driven by
+  query-string parameters and scoped to a partner identifier. This is the only
+  easyJet integration surface that answers anonymously with a 200 — every REST
+  hostname (api.easyjet.com, b2b.easyjet.com) is Akamai-blocked at 403. It is
+  legacy technology (jQuery 1.7.2 / 1.5.1, ASP.NET WebForms sample host) and
+  easyJet publishes no documentation for it anywhere; the parameter surface below
+  is observed verbatim from easyJet's own sample implementation, not inferred.
+hosts:
+- environment: production
+  url: https://brand.easyjet.com/{lang}/
+  status: live
+  note: >-
+    Anonymous GET of Header.js and Footer.js returns 200 with real JavaScript
+    (95 KB and 14 KB respectively). Partner-scoped widgets return 200 with a
+    zero-byte body when the partner id is not recognised — the surface is
+    partner-gated, not public.
+- environment: pre-production
+  url: https://brand-test.easyjet.com/{lang}/
+  status: resolves
+  note: CNAME to branding-preprod3.northeurope.cloudapp.azure.com.
+- environment: test
+  url: https://brand-internal-test.easyjet.com/{lang}/
+  status: live
+  note: >-
+    CNAME to branding-dev1.northeurope.cloudapp.azure.com. Serves the full
+    unminified easyDom library for the internaltest partner.
+- environment: sample implementation
+  url: https://sample-internal-test.easyjet.com/ApiTest.aspx
+  status: live
+  note: >-
+    easyJet's own reference partner site (CNAME to
+    sampleptnr-dev1.northeurope.cloudapp.azure.com), publicly indexed by search
+    engines. Only anonymous GETs of already-indexed pages were performed. It is
+    the de facto documentation for this surface: it demonstrates all three
+    authentication methods, both style variants and the full callback contract.
+families:
+- family: branding
+  description: easyJet-branded page chrome rendered into a partner page.
+  components:
+  - name: Header.js
+    path: /{lang}/Header.js
+    parameters:
+    - {name: variant, observed: [Common]}
+    - {name: style, observed: [semiskimmed]}
+    - {name: showicons, observed: ['true']}
+    anonymous: true
+    status: 200
+  - name: Footer.js
+    path: /{lang}/Footer.js
+    parameters: []
+    anonymous: true
+    status: 200
+- family: identity
+  description: >-
+    easyJet customer sign-in, registration and visitor recognition embedded in a
+    partner page. All are partner-scoped.
+  components:
+  - name: Script.js
+    path: /{lang}/Script.js
+    description: >-
+      Bootstrap loader for the easyDom library and the authentication handler
+      binding.
+    parameters:
+    - {name: authMethod, observed: [Redirect, Embedded, Dialog]}
+    - {name: authHandler, observed: ['SSOExample.ResponseHandler'], note: name of the
+        partner-side callback object}
+    - {name: partner, observed: [internaltest]}
+    anonymous: false
+  - name: SignIn.js
+    path: /{lang}/SignIn.js
+    parameters:
+    - {name: method, observed: [Redirect, Embedded, Dialog]}
+    - {name: partner}
+    - {name: allowRegistration, observed: [None, Dialog, Embedded]}
+    anonymous: false
+  - name: Registration.js
+    path: /{lang}/Registration.js
+    parameters:
+    - {name: method, observed: [Redirect, Embedded, Dialog]}
+    - {name: partner}
+    - {name: autoLogin, observed: ['true']}
+    anonymous: false
+  - name: VRPanel.js
+    path: /{lang}/VRPanel.js
+    description: Visitor Recognition panel — shows the recognised customer and a "Not
+      Me!" clear-name action.
+    parameters:
+    - {name: method, observed: [Redirect, Embedded, Dialog]}
+    - {name: partner}
+    anonymous: false
+library:
+  namespace: easyDom
+  transport: [jQuery.ajax, jQuery.jsonp, CORS where supported]
+  bundled: jQuery 1.7.2 (widget library), jQuery 1.5.1 + json2.js (sample site)
+  objects:
+  - {name: easyDom.AuthenticationControl, note: 'showSignIn, validateSignIn, showRegister,
+      signOut, clearName'}
+  - {name: easyDom.AuthenticationHandler, note: 'constructed with a session id; carries
+      the event callbacks below'}
+  - {name: easyDom.RegistrationControl}
+  - {name: easyDom.FormControl}
+  - {name: easyDom.AuthenticationMethods, values: [Redirect, Dialog, Embedded]}
+  - {name: easyDom.Styles, values: [Classic, Modern]}
+  - {name: easyDom.addStyleAsLink}
+  events:
+  - visitorAvailable
+  - signInShowing
+  - signInShown
+  - signInValidating
+  - signInValidated
+  - signingOut
+  - signedOut
+  - nameClearing
+  - nameCleared
+  - registerShowing
+  - registerShown
+  - registering
+  - registered
+  result_envelope:
+    fields: [Success, Result, ReturnUri, ErrorMessage]
+    note: >-
+      Verbatim from easyJet's sample SSOCallback.js. On Success with method
+      Redirect the browser is sent to ReturnUri; Dialog closes the lightbox;
+      Embedded does nothing.
+authentication:
+  model: partner-scoped session, published nowhere
+  observed:
+  - scheme: partner identifier
+    where: partner query-string parameter on every identity widget
+    note: An unrecognised partner id yields a 200 with an empty body.
+  - scheme: session id
+    where: easyDom.AuthenticationHandler constructor
+    note: The sample initialises with the placeholder value '123456789'.
+  - scheme: customer id + key
+    where: partner-side customer API
+    note: >-
+      The sample's API panel states verbatim "API can be called only when customer
+      is logged in and customer id + key is present." No endpoint, base URL,
+      operation or key-issuance process is published, so no API entry is claimed
+      for it.
+localization:
+  languages: [ca, cs, da, nl, en, fr, de, el, hu, it, pl, pt, es, tr]
+  note: >-
+    Language is a path segment (/en/, /fr/, ...). The sample site's culture picker
+    additionally distinguishes French (Switzerland) and German (Switzerland), both
+    of which map to the fr and de path segments.
+gaps:
+- No published documentation, no versioning, no changelog and no support channel for
+  this surface.
+- No TypeScript types, no npm package and no source repository — the library is only
+  ever loaded from brand.easyjet.com.
+- Partner onboarding is bilateral; there is no self-serve route to a partner id.

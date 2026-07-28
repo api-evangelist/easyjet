@@ -281,7 +281,77 @@ findings:
       Approved channel Duffel describes the easyJet link as "Direct Connect",
       supporting Search & Book, Seat Selection, Paid Baggage, Cancel & Refund
       and Void. NDC is not mentioned.
+  - url: https://sample-internal-test.easyjet.com/ApiTest.aspx
+    status: '200'
+    note: >-
+      SECOND-PASS FIND (2026-07-28). easyJet's own sample partner implementation,
+      publicly indexed by search engines, CNAMEd to
+      sampleptnr-dev1.northeurope.cloudapp.azure.com. An ASP.NET WebForms
+      reference site demonstrating the easyDom partner widget platform in all
+      three authentication modes. Only anonymous GETs of already-indexed pages
+      were performed. It is the de facto documentation for a surface easyJet
+      documents nowhere.
+  - url: https://brand.easyjet.com/en/Header.js?variant=Common&style=semiskimmed&showicons=true
+    status: '200'
+    note: >-
+      SECOND-PASS FIND. Production easyWidget host behind Akamai, serving 95 KB of
+      real branded-header JavaScript to an anonymous caller. The first easyJet
+      first-party interface found that answers 200 without a commercial agreement.
+  - url: https://brand.easyjet.com/en/Footer.js
+    status: '200'
+    note: 13.8 KB of branded-footer JavaScript, anonymous.
+  - url: https://brand.easyjet.com/en/SignIn.js?method=Redirect&partner=internaltest&allowRegistration=None
+    status: '200'
+    note: >-
+      Zero-byte body. The identity widgets are partner-scoped: an unrecognised
+      partner id yields an empty 200 rather than an error.
+  - url: https://brand-internal-test.easyjet.com/en/Script.js?authMethod=Redirect&authHandler=SSOExample.ResponseHandler&partner=internaltest
+    status: '200'
+    note: >-
+      175 KB unminified easyDom library (jQuery 1.7.2 bundled) for the internaltest
+      partner. Exposes easyDom.AuthenticationControl, AuthenticationHandler,
+      RegistrationControl, FormControl, AuthenticationMethods {Redirect, Dialog,
+      Embedded} and Styles {Classic, Modern}.
+  - url: https://sample-internal-test.easyjet.com/Scripts/SSOCallback.js
+    status: '200'
+    note: >-
+      The callback contract, commented by easyJet: thirteen events
+      (visitorAvailable, signInShowing/Shown/Validating/Validated,
+      signingOut/signedOut, nameClearing/nameCleared,
+      registerShowing/Shown/registering/registered) and a
+      {Success, Result, ReturnUri, ErrorMessage} result envelope.
+  - url: https://corporate.easyjet.com/.well-known/security.txt
+    status: '200'
+    note: >-
+      Answers 200 with the body "Invalid key" — a catch-all corporate-site
+      response, NOT an RFC 9116 security.txt. Recorded so a future pass does not
+      mistake the 200 for a real security.txt.
+  - url: https://www.easyjet.com/en/help
+    status: '200'
+    note: easyJet Help Centre. Customer support, no developer or partner support channel.
+  - url: https://www.easyjet.com/en/register
+    status: '200'
+    note: myeasyJet consumer account registration. No developer or partner signup exists.
+  partnerWidgets:
+    found: true
+    platform: easyWidget / easyDom
+    productionHost: https://brand.easyjet.com/{lang}/
+    documented: false
+    note: >-
+      A live, undocumented, partner-scoped client-side integration platform. It
+      does not change the finding that easyJet publishes no machine-readable API
+      contract — it exposes no flight search, booking or ancillary operation — but
+      it does refute the stronger claim that easyJet has no first-party
+      integration surface a stranger can reach. Captured in full in
+      components/easyjet-components.yml.
   transports:
+  - protocol: JavaScript widget (HTTP GET returning JS)
+    scheme: https
+    baseURL: https://brand.easyjet.com/en/
+    documented: false
+    note: >-
+      easyWidget / easyDom partner component platform. Branding widgets anonymous,
+      identity widgets partner-gated. Legacy jQuery, no versioning.
   - protocol: REST
     scheme: https
     baseURL: https://api.easyjet.com

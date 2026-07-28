@@ -1,0 +1,70 @@
+generated: '2026-07-28'
+method: probed
+source: live HTTP probes, 2026-07-28
+summary:
+  documents_found: 0
+  note: >-
+    easyJet publishes no /.well-known/ discovery surface on any host. Every
+    RFC 8615 path probed on the public website returns 404, and every path on the
+    two production API hostnames is blocked by Akamai with HTTP 403 before any
+    document can be served. This file records the absence as verified data — no
+    WellKnown, APICatalog, SecurityTxt or OpenIDConnect pointer is wired in
+    apis.yml because no such document exists.
+hosts:
+- host: https://www.easyjet.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/apple-app-site-association
+    status: 404
+  - path: /.well-known/assetlinks.json
+    status: 404
+  - path: /.well-known/change-password
+    status: 404
+  - path: /llms.txt
+    status: 404
+  - path: /robots.txt
+    status: 200
+    note: >-
+      Served. Sitecore CMS. Disallows /manage/, /BoardingPass/, /*/secure/MyEasyJet.mvc,
+      /*/Reclaim.mvc, /mob/, /*sitecore and /testpages/. References no API or spec path.
+- host: https://api.easyjet.com
+  documents:
+  - path: /.well-known/openid-configuration
+    status: 403
+  - path: /.well-known/oauth-authorization-server
+    status: 403
+  - path: /.well-known/oauth-protected-resource
+    status: 403
+  - path: /.well-known/security.txt
+    status: 403
+  note: Akamai "Access Denied" on every path. Nothing is served anonymously.
+- host: https://b2b.easyjet.com
+  documents:
+  - path: /.well-known/oauth-authorization-server
+    status: 403
+  - path: /.well-known/openid-configuration
+    status: 403
+  note: Akamai "Access Denied" on every path.
+- host: https://corporate.easyjet.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    valid: false
+    note: >-
+      Answers 200 with the two-word body "Invalid key" — a catch-all response from
+      the corporate site, not an RFC 9116 security.txt. Not saved and not counted.
+- host: https://careers.easyjet.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 307
+    valid: false
+    note: Redirects into a Next.js noindex 404 shell. Not a security.txt.
