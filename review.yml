@@ -1,0 +1,779 @@
+aid: easyjet
+name: easyJet
+review:
+  question: Does easyJet publish a public, self-serve developer portal or downloadable
+    API specifications, and what would it cost a reseller to leave?
+  answer: false
+  date: '2026-07-28'
+  reviewer: API Evangelist
+  homeMarket: United Kingdom
+  tier: airline
+  gated: true
+findings:
+  summary: |
+    easyJet Airline Company Limited is a British low-cost short-haul carrier
+    (company number 03034606, registered office Hangar 89, London Luton
+    Airport — both stated verbatim in its own Distribution Charter). It
+    publishes NO developer portal, NO API reference documentation, and NO
+    machine-readable API contract of any kind.
+
+    What it DOES publish, and what makes this record worth having, is the
+    commercial contract that governs API access. The easyJet Distribution
+    Charter (version March 2026) is a public, citable document that states in
+    section 2 that a Reseller must "only access easyJet Data: (i) via an
+    easyJet Approved Channel which has entered into an API agreement with
+    easyJet; or (ii) directly via the easyJet API, if the Reseller has a
+    Direct API Agreement with easyJet." A companion page names the fourteen
+    Approved Channels and grades each on nine content capabilities as of the
+    end of May 2026. That is unusually transparent about the SHAPE of the
+    commercial relationship and completely silent about the shape of the
+    interface.
+
+    Every conventional developer hostname on easyjet.com fails to resolve:
+    developer, developers, docs, apis, ndc, partner, partners, trade, agent,
+    agents, sandbox, dev, portal, connect, xml, mcp, status, trust. Two real
+    API hostnames DO exist — api.easyjet.com and b2b.easyjet.com, both CNAMEd
+    to Akamai edgekey — and both return HTTP 403 "Access Denied" from an
+    Akamai edgesuite error page on every path probed, including
+    /openapi.json, /swagger.json, /api-docs and
+    /.well-known/openid-configuration. gateway.easyjet.com resolves to
+    195.153.65.6 and times out. mobile.easyjet.com returns 503 with an Akamai
+    bot-defence script. www.easyjet.com/developers and /api return 404. There
+    is no security.txt, no llms.txt, no /.well-known/api-catalog and no
+    openapi.json at the web root.
+
+    The NDC finding is the sector-relevant one. easyJet is NOT an NDC
+    carrier. The March 2026 Distribution Charter never uses the word NDC.
+    easyJet does not appear in ndctracker.com's list of 73 airlines with
+    launched or in-development NDC programmes. Its own approved channels
+    describe the connection as a direct-connect proprietary API rather than
+    NDC: Duffel's easyJet page calls it "Direct Connect", and AirGateway's
+    2023 announcement positions its Kyte-facilitated easyJet link as "an
+    effective API-based connection to easyJet" listed SEPARATELY from the
+    "27+ major NDC airlines" it also carries. easyJet is the carrier that
+    never needed NDC because it never had a GDS dependency to escape — it
+    built a direct API and made the GDSes come to it. Amadeus, Sabre and
+    Travelport appear on the approved-channels list as three of fourteen API
+    partners, not as the rail easyJet files fares into.
+
+    There is no official easyJet GitHub organisation. github.com/Easyjet is
+    an unverified 2013 account with a single repository, "flugbokun", with no
+    description and no easyJet attribution; it is not treated as first-party.
+    Third-party projects such as opayen/easyjet-api and the AirLabs "EasyJet
+    API" product are independent reverse-engineering or flight-data
+    offerings, not easyJet interfaces, and are deliberately NOT listed.
+  developerPortal:
+    url: ''
+    confirmed: false
+    classification: none
+    note: >-
+      No first-party developer portal exists at any probed hostname or path.
+      The nearest public surface is a commercial trade hub
+      (/en/business/travel-trade-partners) that names approved channels and
+      contains no technical content.
+  probes:
+  - url: https://developer.easyjet.com
+    status: '000'
+    note: DNS does not resolve.
+  - url: https://developers.easyjet.com
+    status: '000'
+    note: DNS does not resolve.
+  - url: https://docs.easyjet.com
+    status: '000'
+    note: DNS does not resolve.
+  - url: https://apis.easyjet.com
+    status: '000'
+    note: DNS does not resolve.
+  - url: https://ndc.easyjet.com
+    status: '000'
+    note: DNS does not resolve. No NDC endpoint hostname exists.
+  - url: https://partner.easyjet.com
+    status: '000'
+    note: DNS does not resolve.
+  - url: https://partners.easyjet.com
+    status: '000'
+    note: DNS does not resolve.
+  - url: https://trade.easyjet.com
+    status: '000'
+    note: DNS does not resolve.
+  - url: https://agent.easyjet.com
+    status: '000'
+    note: DNS does not resolve.
+  - url: https://agents.easyjet.com
+    status: '000'
+    note: DNS does not resolve.
+  - url: https://sandbox.easyjet.com
+    status: '000'
+    note: DNS does not resolve. No sandbox.
+  - url: https://dev.easyjet.com
+    status: '000'
+    note: DNS does not resolve.
+  - url: https://portal.easyjet.com
+    status: '000'
+    note: DNS does not resolve.
+  - url: https://connect.easyjet.com
+    status: '000'
+    note: DNS does not resolve.
+  - url: https://xml.easyjet.com
+    status: '000'
+    note: DNS does not resolve. No legacy XML endpoint hostname.
+  - url: https://mcp.easyjet.com
+    status: '000'
+    note: DNS does not resolve. No MCP server.
+  - url: https://status.easyjet.com
+    status: '000'
+    note: DNS does not resolve. No status page.
+  - url: https://trust.easyjet.com
+    status: '000'
+    note: DNS does not resolve. No trust centre.
+  - url: https://api.easyjet.com/
+    status: '403'
+    note: >-
+      Resolves via api.easyjet.com.edgekey.net -> e300773.x.akamaiedge.net
+      (23.43.85.23 / 23.43.85.31). Akamai "Access Denied" HTML with an
+      errors.edgesuite.net reference. A real production API hostname, fully
+      edge-gated to unauthorised clients.
+  - url: https://api.easyjet.com/openapi.json
+    status: '403'
+    note: Akamai Access Denied. No spec.
+  - url: https://api.easyjet.com/swagger.json
+    status: '403'
+    note: Akamai Access Denied. No spec.
+  - url: https://api.easyjet.com/v1/openapi.json
+    status: '403'
+    note: Akamai Access Denied. No spec.
+  - url: https://api.easyjet.com/api-docs
+    status: '403'
+    note: Akamai Access Denied.
+  - url: https://api.easyjet.com/.well-known/openid-configuration
+    status: '403'
+    note: Akamai Access Denied. No public OIDC discovery document.
+  - url: https://b2b.easyjet.com/
+    status: '403'
+    note: >-
+      NEW find. Resolves via b2b.easyjet.com.edgekey.net ->
+      e186733.x.akamaiedge.net (23.211.136.6 / 23.211.136.8). Akamai "Access
+      Denied". A dedicated business-to-business hostname exists and is
+      entirely closed to the public.
+  - url: https://b2b.easyjet.com/openapi.json
+    status: '403'
+    note: Akamai Access Denied.
+  - url: https://b2b.easyjet.com/swagger.json
+    status: '403'
+    note: Akamai Access Denied.
+  - url: https://b2b.easyjet.com/api-docs
+    status: '403'
+    note: Akamai Access Denied.
+  - url: https://b2b.easyjet.com/.well-known/openid-configuration
+    status: '403'
+    note: Akamai Access Denied.
+  - url: https://gateway.easyjet.com/
+    status: '000'
+    note: >-
+      Resolves to 195.153.65.6 but the TCP connection times out after 20s. A
+      corporate gateway hostname, not publicly reachable.
+  - url: https://mobile.easyjet.com/
+    status: '503'
+    note: >-
+      Akamai error page carrying an obfuscated bot-defence script. App backend
+      host, not a documented API.
+  - url: https://www.easyjet.com/developers
+    status: '404'
+    note: No developer path exists.
+  - url: https://www.easyjet.com/en/developers
+    status: '404'
+    note: No developer path exists.
+  - url: https://www.easyjet.com/api
+    status: '404'
+    note: No API path exists.
+  - url: https://www.easyjet.com/openapi.json
+    status: '404'
+    note: Not served.
+  - url: https://www.easyjet.com/.well-known/api-catalog
+    status: '404'
+    note: Not served. No RFC 9727 API catalogue.
+  - url: https://www.easyjet.com/.well-known/security.txt
+    status: '404'
+    note: Not served. No RFC 9116 security.txt.
+  - url: https://www.easyjet.com/security.txt
+    status: '404'
+    note: Not served.
+  - url: https://www.easyjet.com/llms.txt
+    status: '404'
+    note: Not served.
+  - url: https://www.easyjet.com/.well-known/apple-app-site-association
+    status: '404'
+    note: Not served at the web root.
+  - url: https://www.easyjet.com/robots.txt
+    status: '200'
+    note: >-
+      Served. Disallows /manage/, /BoardingPass/ across every locale,
+      /*/secure/MyEasyJet.mvc, /*/Reclaim.mvc, /mob/, /*sitecore and
+      /testpages/. Confirms a Sitecore CMS. No API or spec paths referenced.
+  - url: https://www.easyjet.com/en/business/distribution-charter
+    status: '200'
+    note: >-
+      PRIMARY EVIDENCE. Full Distribution Charter, version March 2026, 14
+      numbered sections plus definitions. Governs all reseller API access.
+  - url: https://www.easyjet.com/en/business/approved-channels-
+    status: '200'
+    note: >-
+      PRIMARY EVIDENCE. Names 14 approved aggregator and GDS partners with a
+      nine-column functionality matrix current to end of May 2026.
+  - url: https://www.easyjet.com/en/business/travel-trade-partners
+    status: '200'
+    note: >-
+      "Central hub for agents and technical partners booking our content
+      through our approved channels." No API or technical integration content.
+  - url: https://www.easyjet.com/en/business
+    status: '403'
+    note: Akamai bot mitigation on the business index page itself.
+  - url: https://www.easyjet.com/en/business/business-fares
+    status: '200'
+    note: Business fares marketing page.
+  - url: https://www.easyjet.com/en/policy/acceptable-use
+    status: '200'
+    note: Acceptable Use Policy, incorporated by reference into the Distribution Charter.
+  - url: https://www.easyjet.com/en/policy/privacy
+    status: '200'
+    note: Privacy notice landing page linking to the full PDF.
+  - url: https://www.easyjet.com/ejcms/cache/medialibrary/Files/Privacy-notice/DL8050-Web-privacy-policy-2023-V3.pdf
+    status: '200'
+    note: >-
+      Full privacy notice PDF (DL8050 V3). Contains the data-portability
+      commitment and the worked example of exportable fields.
+  - url: https://www.easyjet.com/en/terms-and-conditions
+    status: '200'
+    note: Passenger terms and conditions.
+  - url: https://www.easyjet.com/en/flight-tracker
+    status: '403'
+    note: >-
+      Akamai bot mitigation. A consumer flight-tracking web page exists; no API
+      behind it is documented.
+  - url: https://easyjet.com/
+    status: '403'
+    note: Akamai bot mitigation on the apex domain.
+  - url: https://www.easyjetholidays.com/
+    status: '403'
+    note: Akamai bot mitigation. easyJet holidays package business, no public API.
+  - url: https://corporate.easyjet.com/
+    status: '403'
+    note: >-
+      Cloudflare managed challenge ("Just a moment..."). Investor-relations and
+      corporate site, machine-inaccessible.
+  - url: https://careers.easyjet.com/
+    status: '200'
+    note: Careers site.
+  - url: https://github.com/Easyjet
+    status: '200'
+    note: >-
+      Unverified GitHub organisation created 2013-10-17, is_verified false, no
+      description, 1 public repository ("flugbokun", no description, no
+      language, not a fork). NOT treated as an official easyJet organisation.
+  - url: https://ndctracker.com/
+    status: '200'
+    note: >-
+      Independent NDC tracker listing 73 airlines with launched or
+      in-development NDC programmes. easyJet is NOT among them.
+  - url: https://duffel.com/flights/airlines/easyjet
+    status: '200'
+    note: >-
+      Approved channel Duffel describes the easyJet link as "Direct Connect",
+      supporting Search & Book, Seat Selection, Paid Baggage, Cancel & Refund
+      and Void. NDC is not mentioned.
+  transports:
+  - protocol: REST
+    scheme: https
+    baseURL: https://api.easyjet.com
+    documented: false
+    note: Akamai-fronted production hostname. 403 on every probed path.
+  - protocol: REST
+    scheme: https
+    baseURL: https://b2b.easyjet.com
+    documented: false
+    note: Akamai-fronted B2B hostname. 403 on every probed path.
+  - protocol: GraphQL
+    documented: false
+    note: No /graphql surface found on any easyJet host.
+  - protocol: SOAP/XML
+    documented: false
+    note: >-
+      No WSDL or XSD published; xml.easyjet.com does not resolve. LCC
+      aggregators historically front carriers like easyJet with XML, but
+      nothing is published by easyJet.
+  - protocol: WebSocket
+    scheme: wss
+    documented: false
+    note: No WebSocket endpoint documented.
+  authModel:
+    public: none
+    observed:
+    - scheme: unknown
+      where: api.easyjet.com, b2b.easyjet.com
+      note: >-
+        Akamai returns 403 before any auth challenge is issued, so no scheme
+        can be asserted. Nothing is published.
+    wellKnown:
+    - url: https://api.easyjet.com/.well-known/openid-configuration
+      status: '403'
+    - url: https://b2b.easyjet.com/.well-known/openid-configuration
+      status: '403'
+    - url: https://www.easyjet.com/.well-known/api-catalog
+      status: '404'
+  webhooks:
+    documented: false
+    note: >-
+      No event catalogue, webhook documentation or AsyncAPI definition found.
+      Section 4 of the charter describes a push obligation in the opposite
+      direction — the reseller must submit customer contact details to easyJet
+      via the API so that easyJet can reach the passenger during disruption.
+  openapi:
+    harvested: false
+    count: 0
+    note: >-
+      Zero OpenAPI, Swagger, AsyncAPI, GraphQL or WSDL documents are published.
+      No openapi/ directory was created because nothing real was found to save.
+  sourceCode:
+    firstPartyGitHub: false
+    note: >-
+      No official easyJet GitHub organisation exists. github.com/Easyjet is
+      unverified (is_verified false), created 2013-10-17, last updated
+      2016-02-27, with one undescribed repository "flugbokun". Third-party
+      projects (opayen/easyjet-api) and third-party flight-data products
+      marketed as an "EasyJet API" (AirLabs) are not easyJet interfaces and are
+      excluded.
+  domainSecurity:
+    dmarc: v=DMARC1; p=reject; sp=reject; fo=1 (Proofpoint reporting)
+    securityTxt: false
+    note: >-
+      DMARC is at full enforcement with subdomain policy reject, reported to
+      Proofpoint. No RFC 9116 security.txt is published at either the well-known
+      or legacy path, and no vulnerability disclosure programme was found.
+  regulatory:
+    regime: >-
+      UK CAA operating licence; UK GDPR / Data Protection Act 2018; ATOL
+      Regulations and Package Travel Regulations (UK) referenced directly in the
+      Distribution Charter; EU261/UK261 passenger rights.
+    openDataMandate: none
+    note: >-
+      Nothing in UK or EU law compels an airline to publish a distribution API
+      or a machine-readable contract. The only portability obligation that
+      bites is UK GDPR Article 20, which easyJet honours on request and scopes
+      to flight and holiday history.
+switchingCost:
+  interfaceShape:
+    value: proprietary-undocumented
+    standardNamed: none
+    evidence: >-
+      The Distribution Charter names "the easyJet API" and defines a "Direct API
+      Agreement" as "an API agreement entered into between the Reseller and
+      easyJet granting the Reseller direct access to the easyJet Data" — but no
+      protocol, base URL, operation, schema, authentication scheme or scope is
+      published anywhere. No OpenAPI, Swagger, AsyncAPI, GraphQL SDL, WSDL or
+      XSD was found. No IATA NDC schema reference, no OpenTravel/OTA reference,
+      no OpenAPI reference. api.easyjet.com and b2b.easyjet.com both answer
+      403 from Akamai on every path. The contract shape is therefore bilateral
+      and unique to easyJet: an integration built against it is not portable to
+      any other carrier, and no other party implements it.
+    note: >-
+      This is the single most important switching-cost signal here. A reseller
+      that integrates the easyJet API directly is building against a shape only
+      easyJet defines and only easyJet can change. Because the charter also
+      reserves the right for easyJet to amend the charter "from time to time,
+      without notice, by amending this page", the commercial terms attached to
+      that shape are unilaterally mutable too.
+  secondSource:
+    value: alternatives-with-migration
+    alternativesConsidered:
+    - name: Direct API Agreement with easyJet
+      note: Bilateral, negotiated, undocumented. No published application route.
+    - name: Amadeus
+      note: Approved channel. Full matrix except Flex Pass Extra and Smart+.
+    - name: Anaxys
+      note: Approved channel. Seat selection, hold bags, Inclusive, Inclusive Plus only.
+    - name: Bewotec
+      note: Approved channel. No large cabin bag, no Flex; has Smart+.
+    - name: Duffel
+      note: >-
+        Approved channel and the sector's most-watched API-first booking layer.
+        Full matrix except Flex Pass Extra. Describes the link as Direct Connect.
+    - name: JFA Systems
+      note: Approved channel. Narrow content set.
+    - name: Kyte
+      note: >-
+        Approved channel with the complete nine-of-nine functionality matrix.
+        Facilitates easyJet content into AirGateway.
+    - name: Paxport
+      note: Approved channel with the complete nine-of-nine functionality matrix.
+    - name: Peakwork
+      note: Approved channel. Tour-operator oriented, no post-booking servicing.
+    - name: Sabre
+      note: Approved channel. Full matrix except Flex Pass Extra.
+    - name: Travelfusion
+      note: >-
+        Approved channel with the complete nine-of-nine functionality matrix.
+        The long-standing LCC direct-connect aggregator.
+    - name: Travelport
+      note: >-
+        Approved channel. Seat, large cabin bag, hold bags, Inclusive,
+        Inclusive Plus and post-booking servicing; no Flex, Pass Extra or Smart+.
+    - name: Traveltek
+      note: Approved channel. Narrow content set, no post-booking servicing.
+    - name: Viaxoft
+      note: Approved channel.
+    - name: Ypsilon
+      note: Approved channel. No Flex, Pass Extra or Smart+.
+    evidence: >-
+      https://www.easyjet.com/en/business/approved-channels- names fourteen
+      Approved Channels and grades each across nine content capabilities (seat
+      selection, large cabin bag, hold bags, Flex, Pass Extra, Smart+,
+      Inclusive, Inclusive Plus, post-booking servicing) with the matrix
+      explicitly dated to the end of May 2026.
+    note: >-
+      Read carefully, this is two different answers. For easyJet's own seat
+      inventory there is NO second source: only easyJet sells easyJet seats,
+      and no other carrier's API substitutes. For the ROUTE to that inventory
+      there are genuinely fourteen alternatives, and easyJet publishes a matrix
+      that lets a reseller compare them — which is more transparency than most
+      carriers offer. But the alternatives are not interchangeable: each
+      aggregator exposes its own proprietary interface, and the published
+      matrix shows they differ materially in what easyJet content they can
+      actually sell (only Kyte, Paxport and Travelfusion carry all nine
+      capabilities; Anaxys, JFA Systems and Traveltek carry four). Switching
+      channel is therefore a re-integration project plus a content-coverage
+      regression. Hence alternatives-with-migration, not
+      interchangeable-alternatives.
+  exitPath:
+    value: export-on-request
+    operationCited: none
+    evidence: >-
+      No export, dump, bulk or reporting operation is published, because no API
+      is published. The only implemented data-portability commitment is
+      consumer-side and lives in the privacy notice PDF: "You have the right to
+      receive some of your Personal Data in a portable and reusable format.
+      Your right to data portability only applies to your flight and holiday
+      history." The PDF gives a worked example of the exportable record —
+      booking reference, date, flight number, origin, destination, currency,
+      price, seat number (e.g. FG123H / 23/12/2016 / EZY123 / LTN / LIS / GBP /
+      25.99 / 9B). Requests are made "via easyJet's online privacy notice which
+      is available at (www.easyJet.com)" or by contacting
+      data.protection@easyJet.com.
+    note: >-
+      This is a UK GDPR Article 20 right honoured on request, explicitly scoped
+      to flight and holiday history only — not an API operation, not
+      self-serve, and nothing at all for a reseller or corporate customer.
+      There is no published mechanism by which a travel agency could extract
+      its own easyJet booking book. Scored export-on-request on the strength of
+      the consumer commitment alone.
+  identifierPortability:
+    summary: >-
+      Shared IATA identifiers on the surface, proprietary booking key underneath.
+    identifiersFound:
+    - identifier: IATA 3-letter airport codes
+      portable: true
+      evidence: LTN and LIS used in the privacy notice's portability example.
+    - identifier: ICAO/IATA flight designator EZY
+      portable: true
+      evidence: >-
+        Flight number "EZY123" in the privacy notice example. easyJet's ICAO
+        designator EZY; the carrier trades under IATA code U2.
+    - identifier: easyJet booking reference (6-character alphanumeric PNR-style locator)
+      portable: false
+      evidence: >-
+        "FG123H" in the privacy notice example, labelled "Booking reference".
+        This is easyJet's own record locator; nothing published maps it to any
+        GDS record, IATA ticket number or interline document.
+    - identifier: IATA/ARC agency accreditation number
+      portable: notRequired
+      evidence: >-
+        The Distribution Charter never mentions IATA accreditation, ARC, BSP or
+        an agency numeric code as a prerequisite. Eligibility is defined purely
+        by holding an API agreement, directly or through an Approved Channel.
+    note: >-
+      The consumer-facing schema hangs on shared industry codes, which travel.
+      The commercial key — the booking reference that identifies the sellable
+      thing — is easyJet's own, and there is no published cross-reference to a
+      GDS record locator or an IATA ticket number. easyJet is not distributing
+      through interline ticketing, so the usual portable ticket identifier
+      never enters the picture.
+  contractualLockIn:
+    published: true
+    document: easyJet Distribution Charter
+    version: March 2026
+    url: https://www.easyjet.com/en/business/distribution-charter
+    governingLaw: >-
+      "This Distribution Charter shall be governed by the laws of England and
+      Wales. The courts of England and Wales will have exclusive jurisdiction in
+      connection with this Distribution Charter (including any claims or
+      disputes)."
+    verbatim:
+    - clause: Access restriction (section 2(a))
+      text: >-
+        "Resellers must: (a) only access easyJet Data: (i) via an easyJet
+        Approved Channel which has entered into an API agreement with easyJet;
+        or (ii) directly via the easyJet API, if the Reseller has a Direct API
+        Agreement with easyJet."
+    - clause: Anti-scraping (section 2(c))
+      text: >-
+        "not gather, extract, reproduce, re-utilise or display easyJet Data by
+        any means, such as the use of 'screen scraping' software or any other
+        automated means used to extract data such as program, robot, web
+        crawler, spider, data mining, trawling or other 'screen scraping'
+        software, process or program"
+    - clause: Website use (section 2(b))
+      text: >-
+        "not use the easyJet website other than if/as specifically permitted by
+        easyJet in writing"
+    - clause: Unilateral amendment (section 1)
+      text: >-
+        "easyJet may amend the Distribution Charter from time to time, without
+        notice, by amending this page. The amended Distribution Charter will be
+        effective from the date it is posted to our website... Your continued
+        use of easyJet Data and the easyJet website/channels/services will
+        constitute your acceptance of the amended Distribution Charter."
+    - clause: Termination and booking cancellation (section 13)
+      text: >-
+        "easyJet reserves the right to take action at any time against any
+        Resellers who do not comply, or are suspected of not complying with,
+        this Distribution Charter, including restricting, suspending or
+        terminating the Reseller's access to the easyJet Data, cancelling any
+        easyJet flight bookings made by a Reseller, preventing the Reseller from
+        making future easyJet flight bookings and seeking all remedies available
+        by law."
+    - clause: Investigation consent (section 13)
+      text: >-
+        "easyJet reserves the right to investigate any suspected non-compliance
+        with this Distribution Charter using appropriate technology or other
+        means. By accessing easyJet Data, Resellers consent to easyJet carrying
+        out such investigations as may be necessary to identify or prevent
+        non-compliance."
+    - clause: Mandatory customer data submission (section 4(a))
+      text: >-
+        "submit the Customer's email address and mobile telephone number to
+        easyJet via the API as soon as the booking is made."
+    - clause: Check-in prohibition (section 6)
+      text: >-
+        "Resellers are not permitted to check in on behalf of Customers
+        (including through the use of any automated process)."
+    - clause: Prohibited payment routing (section 12)
+      text: >-
+        "Resellers must not facilitate or enable any booking transaction where
+        the Customer makes a direct booking on easyJet's website, mobile app, or
+        other official channels using a card, voucher, or other payment
+        instrument issued or funded by the Reseller, including any prepaid debit
+        card, unless expressly authorised in writing by easyJet."
+    - clause: Refund flow (section 5)
+      text: >-
+        "Any refunds due from easyJet to Customers will be made to the original
+        method of payment... The Reseller must then refund the Customer on
+        behalf of easyJet within [2] working days of receipt of the relevant
+        funds from easyJet."
+    - clause: Reseller fee disclosure (section 3(b))
+      text: >-
+        "Any additional charges imposed by the Reseller (including, but not
+        limited to, any booking or service fees for flights and/or ancillary
+        services such as seating, bags, name and date changes) must be clearly
+        identified as an additional fee to the easyJet flight charged by the
+        Reseller."
+    - clause: Brand licence (section 10)
+      text: >-
+        "The 'easyJet' brand is licensed to easyJet by easyGroup Limited
+        ('easyGroup') and accordingly the Reseller must comply with any
+        instructions from easyJet or easyGroup in relation to the 'easyJet'
+        brand or any other 'easy' trademark."
+    - clause: ATOL (section 7)
+      text: >-
+        "In respect of UK sales, Resellers are only permitted to sell easyJet
+        products and services where their bookings are ATOL protected by the
+        Reseller. Where ATOL protection is not required under the regulations,
+        the Reseller must state clearly on the booking confirmation 'This sale
+        is not ATOL protected'."
+    notPublished:
+    - Minimum term or contract length
+    - Exclusivity or full-content obligations
+    - Per-segment or per-booking fees payable by the reseller to easyJet
+    - Termination notice period
+    - Commission or incentive structure
+    - Service-level or uptime commitments
+    - Any pricing for a Direct API Agreement
+    note: >-
+      The behavioural terms are unusually well published for this sector; the
+      COMMERCIAL terms are not published at all. Everything a buyer would need
+      to price the relationship — term, fees, exclusivity, notice — lives in
+      the unpublished Direct API Agreement or the aggregator's own contract.
+      Nothing here should be inferred beyond the quoted text.
+  accessGate:
+    value: commercial-agreement
+    selfServe: false
+    whatADeveloperMustSign: >-
+      Either (a) a Direct API Agreement with easyJet — a bilateral contract with
+      no published application form, no published contact, no published pricing
+      and no published eligibility criteria; or (b) the commercial agreement of
+      one of the fourteen Approved Channels, each of which has itself "entered
+      into an API agreement with easyJet". In both cases the reseller is
+      additionally bound by the Distribution Charter and the Acceptable Use
+      Policy, under English law. No IATA or ARC accreditation is named as a
+      requirement. There is no sandbox, no trial, no API key self-signup, and
+      no published rate limits.
+    note: >-
+      easyJet publishes WHO you can go through and WHAT you must not do, but
+      never HOW to apply. The travel-trade-partners hub gives an email address
+      only for whole-plane charters and series seat allotments
+      (charters@easyjet.com); everything else routes to "contact your approved
+      channel".
+  distributionModel:
+    value: aggregator-reseller
+    detail: >-
+      Predominantly direct-to-consumer through easyjet.com and the easyJet app,
+      with agency and OTA reach delivered through fourteen Approved Channels
+      that each hold an API agreement with easyJet, plus a bilateral Direct API
+      Agreement path for individual resellers. Amadeus, Sabre and Travelport
+      appear on that list as three of fourteen API partners rather than as the
+      distribution rail — easyJet is a carrier the GDSes connect to, not one
+      that files into them. easyJet was among the first European low-fares
+      airlines to make inventory available through a GDS at all, via Amadeus
+      and Galileo in 2007 for the corporate travel market, with Sabre renewing
+      a distribution agreement in 2020.
+  ndcPosture:
+    isNdc: false
+    certificationLevelClaimed: none
+    ndcApiPublished: false
+    gdsSurchargeVerified: false
+    evidence: >-
+      The Distribution Charter (March 2026) does not contain the string NDC.
+      easyJet does not appear on ndctracker.com's list of 73 airlines with
+      launched or in-development NDC programmes. IATA has sunset the old NDC
+      certification registry in favour of the ARM index, and no easyJet entry
+      was found. Approved channels describe the link as a direct-connect
+      proprietary API: Duffel's easyJet page labels it "Direct Connect", and
+      AirGateway's 14 August 2023 announcement describes its Kyte-facilitated
+      easyJet link as "an effective API-based connection to easyJet", listed
+      separately from the "27+ major NDC airlines" it also carries.
+    note: >-
+      This is the structurally interesting fact about easyJet in the UK travel
+      seam. NDC exists to let full-service carriers escape GDS intermediation.
+      easyJet never had that problem — it was built direct, never depended on
+      the GDS, and consequently had no reason to adopt IATA's remedy. It solved
+      the same commercial problem a decade earlier with a proprietary API and a
+      charter, and the industry's newest API-first layer (Duffel) reaches it by
+      direct connect rather than by standard. The lock-in it creates is
+      therefore private-contract lock-in, not standard-mediated lock-in: no
+      part of an easyJet integration is reusable against another carrier.
+      easyJet has been reported as working with Datalex on shop/order/payment
+      implementation, but nothing about that is publicly documented as an NDC
+      interface and it is not counted here.
+  consumerVsDistributionSurface:
+    consumer:
+      apisPublished: false
+      note: >-
+        Flight status, check-in, boarding passes, loyalty (easyJet Plus) and
+        voucher wallet are all delivered through easyjet.com and the easyJet
+        app only. robots.txt disallows /BoardingPass/, /manage/,
+        /*/secure/MyEasyJet.mvc and /*/Reclaim.mvc across every locale. The
+        flight tracker is a web page (403 to non-browser clients), not a
+        documented API. mobile.easyjet.com exists and is bot-defended. No
+        consumer API is published.
+    distribution:
+      apisPublished: false
+      apisExist: true
+      note: >-
+        "the easyJet API" is named in easyJet's own charter and is demonstrably
+        in production — fourteen aggregators sell against it and Duffel
+        documents the resulting capabilities. It is simply not documented by
+        easyJet to the public. api.easyjet.com and b2b.easyjet.com are the two
+        real hostnames and both are Akamai-gated 403.
+sources:
+- url: https://www.easyjet.com/en/business/distribution-charter
+  type: DistributionCharter
+  note: >-
+    Version March 2026. The single most important document in this record:
+    defines Approved Channel, Direct API Agreement, easyJet Data and Reseller,
+    and sets every behavioural term quoted above.
+- url: https://www.easyjet.com/en/business/approved-channels-
+  type: ApprovedChannels
+  note: >-
+    Fourteen approved aggregator and GDS partners with a nine-capability
+    functionality matrix, explicitly dated to the end of May 2026. Also names
+    charters@easyjet.com for whole-plane charters and series seat allotments,
+    and a dedicated groups team for bookings of 10+ adults.
+- url: https://www.easyjet.com/en/business/travel-trade-partners
+  type: PartnerPortal
+  note: >-
+    "Welcome to our central hub for agents and technical partners booking our
+    content through our approved channels." No technical or API content.
+- url: https://www.easyjet.com/en/policy/acceptable-use
+  type: AcceptableUsePolicy
+  note: Incorporated by reference into the Distribution Charter.
+- url: https://www.easyjet.com/ejcms/cache/medialibrary/Files/Privacy-notice/DL8050-Web-privacy-policy-2023-V3.pdf
+  type: PrivacyNotice
+  note: >-
+    DL8050 V3. Enumerates eight data-protection rights including data
+    portability, scopes portability to flight and holiday history, gives the
+    exportable-field example, and names data.protection@easyJet.com.
+- url: https://duffel.com/flights/airlines/easyjet
+  type: PartnerDocumentation
+  note: >-
+    Approved channel. Describes the easyJet link as "Direct Connect" — "This is
+    the preferred channel of distribution for airlines and ensures earlier
+    access to new features" — with Search & Book, Seat Selection, Paid Baggage,
+    Cancel & Refund and Void. NDC not mentioned.
+- url: https://airgateway.com/articles/easy-jet-content-now-available-on-air-gateway-facilitated-by-kyte/
+  type: TradePress
+  note: >-
+    AirGateway, 14 August 2023. Kyte-facilitated "API-based connection to
+    easyJet", listed separately from AirGateway's 27+ NDC airlines.
+- url: https://www.businesstravelnewseurope.com/TMC-Distribution/AirGateway-partners-with-Kyte-to-offer-Easyjet-NDC-content
+  type: TradePress
+  note: >-
+    Business Travel News Europe coverage of the same AirGateway/Kyte easyJet
+    link.
+- url: https://ndctracker.com/
+  type: Reference
+  note: >-
+    Independent NDC programme tracker, 73 airlines listed across Launched and
+    In Development. easyJet is absent.
+- url: https://www.iata.org/en/programs/airline-distribution/retailing/ndc/
+  type: Standard
+  note: >-
+    IATA's NDC programme. The old certification registry has been sunset in
+    favour of the ARM index; no easyJet entry was found in either.
+- url: http://ir.travelport.com/news-releases?item=19
+  type: PressRelease
+  note: >-
+    5 November 2007 — "easyJet Signs Break-Through Distribution Deals with
+    Amadeus and Galileo for the Corporate Travel Market". The moment a European
+    low-fares carrier first entered GDS distribution, on its own terms.
+- url: https://www.travolution.com/news/travel-sectors/travel-agents/sabre-become-latest-gds-to-secure-new-easyjet-distribution-deal/
+  type: TradePress
+  note: >-
+    Sabre secures an easyJet distribution deal for European corporate travel
+    agencies (2020), after renewed agreements with Travelport and Amadeus.
+- url: https://www.easyjet.com/robots.txt
+  type: Reference
+  note: >-
+    Sitecore CMS confirmed. Disallows boarding-pass, manage-booking, reclaim
+    and secure account paths across every locale. No API paths referenced.
+- url: https://careers.easyjet.com/
+  type: Careers
+  note: easyJet careers site.
+- url: https://corporate.easyjet.com/
+  type: InvestorRelations
+  note: >-
+    Corporate and investor site, behind a Cloudflare managed challenge and not
+    machine-readable.
+actions:
+  apisYmlUpdated: true
+  openapiHarvested: false
+  specsSaved: 0
+  reason: >-
+    Recorded as an honest stub with a full switching-cost record. easyJet
+    operates a real, production distribution API — named in its own charter and
+    consumed by fourteen approved aggregators — but publishes no developer
+    portal, no reference documentation, no machine-readable specification, no
+    authentication metadata and no webhook catalogue. apis[] is intentionally
+    empty because listing an Akamai-gated hostname as an API would be
+    fabrication. The value of this record is the switchingCost block: easyJet
+    is the clearest example in the UK travel seam of lock-in achieved by
+    private contract rather than by standard — a carrier that never needed NDC
+    because it never had a GDS to escape, and whose API is consequently
+    reusable against nothing else on earth.

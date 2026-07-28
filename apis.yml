@@ -1,0 +1,100 @@
+aid: easyjet
+url: https://raw.githubusercontent.com/api-evangelist/easyjet/refs/heads/main/apis.yml
+name: easyJet
+kind: company
+description: >-
+  easyJet Airline Company Limited is a British low-cost short-haul carrier
+  registered in England (company number 03034606, registered office Hangar 89,
+  London Luton Airport, Luton, Bedfordshire, LU2 9PF), flying a point-to-point
+  network that its own trade pages describe as connecting more than 155 airports
+  across 35 countries. Its home market is the United Kingdom and its commercial
+  centre of gravity is intra-European leisure and short-haul business traffic,
+  extended by the easyJet holidays package business and by ancillary products
+  (seat selection, hold and large cabin bags, Flex, Pass Extra, Smart+,
+  Inclusive and Inclusive Plus fare bundles). easyJet sits at the direct end of
+  the airline distribution chain. It was built without a GDS dependency and
+  still sells the overwhelming majority of its seats through its own website and
+  app; agency and OTA access exists but is a controlled secondary channel rather
+  than the primary rail. That channel is governed by a published Distribution
+  Charter (version March 2026) which permits a Reseller to access easyJet Data
+  in exactly two ways — "via an easyJet Approved Channel which has entered into
+  an API agreement with easyJet" or "directly via the easyJet API, if the
+  Reseller has a Direct API Agreement with easyJet" — and which explicitly
+  forbids screen scraping and any other automated extraction. easyJet publishes
+  the list of Approved Channels and a per-partner functionality matrix current
+  to the end of May 2026: Amadeus, Anaxys, Bewotec, Duffel, JFA Systems, Kyte,
+  Paxport, Peakwork, Sabre, Travelfusion, Travelport, Traveltek, Viaxoft and
+  Ypsilon. Its API posture, stated honestly, is commercial-agreement-gated and
+  undocumented. There is no developer portal — developer, developers, docs,
+  apis, ndc, partner, partners, trade, agent, sandbox, dev, portal, connect and
+  xml subdomains of easyjet.com all fail to resolve — and no machine-readable
+  contract of any kind is published: no OpenAPI, no Swagger, no AsyncAPI, no
+  GraphQL schema, no security.txt, no llms.txt and no .well-known API catalogue.
+  Two real API hostnames do exist, api.easyjet.com and b2b.easyjet.com, but both
+  sit behind Akamai and return HTTP 403 Access Denied on every path probed. Just
+  as importantly, easyJet is not an NDC carrier: the March 2026 charter never
+  mentions NDC, easyJet does not appear on ndctracker.com's list of 73 airlines
+  with launched or in-development NDC programmes, and its aggregators describe
+  the connection as a direct-connect API rather than an NDC one — Duffel labels
+  it "Direct Connect". A reseller therefore integrates against a bilateral,
+  proprietary, unpublished interface under an English-law contract that easyJet
+  may amend without notice and under which it reserves the right to restrict,
+  suspend or terminate access and to cancel bookings already made. This record
+  is an honest stub: apis[] is empty because no easyJet API is publicly
+  documented, and listing an Akamai-gated hostname as an API would be
+  fabrication.
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+tags:
+- Travel
+- United Kingdom
+- Aviation
+- Airline
+- Low Cost Carrier
+- Europe
+- Distribution
+- Booking
+- Ancillaries
+- Partner Gated
+created: '2026-07-28'
+modified: '2026-07-28'
+specificationVersion: '0.19'
+apis: []
+common:
+- type: Website
+  url: https://www.easyjet.com/
+- type: DistributionCharter
+  name: easyJet distribution charter (version March 2026)
+  url: https://www.easyjet.com/en/business/distribution-charter
+- type: ApprovedChannels
+  name: easyJet approved aggregator and GDS channels
+  url: https://www.easyjet.com/en/business/approved-channels-
+- type: PartnerPortal
+  name: Travel trade partners hub
+  url: https://www.easyjet.com/en/business/travel-trade-partners
+- type: AcceptableUsePolicy
+  url: https://www.easyjet.com/en/policy/acceptable-use
+- type: PrivacyNotice
+  url: https://www.easyjet.com/en/policy/privacy
+- type: PrivacyNotice
+  name: easyJet privacy notice (PDF, DL8050 V3)
+  url: https://www.easyjet.com/ejcms/cache/medialibrary/Files/Privacy-notice/DL8050-Web-privacy-policy-2023-V3.pdf
+- type: TermsOfService
+  url: https://www.easyjet.com/en/terms-and-conditions
+- type: BusinessFares
+  name: easyJet business fares
+  url: https://www.easyjet.com/en/business/business-fares
+- type: Contact
+  name: Charter flights and series seat allotments
+  url: mailto:charters@easyjet.com
+- type: Contact
+  name: easyJet data protection team
+  url: mailto:data.protection@easyJet.com
+- type: LinkedIn
+  url: https://www.linkedin.com/company/easyjet
+- type: Careers
+  url: https://careers.easyjet.com/
+- type: InvestorRelations
+  url: https://corporate.easyjet.com/
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
