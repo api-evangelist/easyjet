@@ -86,6 +86,12 @@ apis:
   baseURL: https://brand.easyjet.com/en/
   tags:
   - Widgets
+  - Single Sign-On
+  - Partner Integration
+  - White Label
+  - JavaScript
+  tags_raw:
+  - Widgets
   - Single Sign On
   - Partner Integration
   - White Label
