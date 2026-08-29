@@ -50,6 +50,17 @@ description: >-
   a stranger with a 200. The REST hostnames stay closed, and this record stays
   honest about the difference: only what can be verified is catalogued, and an
   Akamai-gated hostname is still not listed as an API.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 tags:
 - Travel
