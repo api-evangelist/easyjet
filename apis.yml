@@ -78,6 +78,17 @@ tags:
 - Travel
 - United Kingdom
 - Aviation
+- Airlines
+- Low Cost Carrier
+- Europe
+- Distribution
+- Booking
+- Ancillaries
+- Partner Gated
+tags_raw:
+- Travel
+- United Kingdom
+- Aviation
 - Airline
 - Low Cost Carrier
 - Europe
@@ -109,7 +120,7 @@ apis:
   baseURL: https://brand.easyjet.com/en/
   tags:
   - Widgets
-  - Single Sign-On
+  - SSO
   - Partner Integration
   - White Label
   - JavaScript
