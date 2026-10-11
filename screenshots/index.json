@@ -1,0 +1,11 @@
+[
+  {
+    "repo": "easyjet",
+    "captured_at": "2026-10-11T185554",
+    "source_url": "https://www.easyjet.com/",
+    "source_type": "Website",
+    "file": "easyjet-2026-10-11T185554.png",
+    "bytes": 24794,
+    "capture": "playwright-local"
+  }
+]
