@@ -19,8 +19,25 @@ edges:
   - cancellation
   - seat selection
   - void
+- partner_name: SiteMinder
+  partner: siteminder
+  partner_match: aggregator
+  type: coverage
+  channel: partner-built
+  relationship: connector-coverage
+  direction: partner-built
+  evidence: https://integrations-api.siteminder.com/public/partners/all?lang=en
+  listed_as: Easyjet Holidays
+  detected_by: sweep-hospitality.py
+  detected: '2026-10-14'
+  categories:
+  - ota
+  - tour_operator
 generated: '2026-10-14'
 method: searched
 checked:
 - https://duffel.com/flights/airlines
-source: https://duffel.com/flights/airlines
+- https://integrations-api.siteminder.com/public/partners/all?lang=en
+source:
+- https://duffel.com/flights/airlines
+- https://integrations-api.siteminder.com/public/partners/all?lang=en
