@@ -1,4 +1,4 @@
-# easyJet (easyjet)
+# easyJet
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,94 +64,87 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-easyJet Airline Company Limited is a British low-cost short-haul carrier registered in England (company number 03034606, registered office Hangar 89, London Luton Airport, Luton, Bedfordshire, LU2 9PF), flying a point-to-point network that its own trade pages describe as connecting more than 155 airports across 35 countries. Its home market is the United Kingdom and its commercial centre of gravity is intra-European leisure and short-haul business traffic, extended by the easyJet holidays package business and by ancillary products. easyJet sits at the direct end of the airline distribution chain: it was built without a GDS dependency and still sells the overwhelming majority of its seats through its own website and app, with agency and OTA access governed by a published Distribution Charter and delivered through fourteen approved aggregator and GDS channels. Its API posture, stated honestly, is commercial-agreement-gated and undocumented — there is no developer portal and no machine-readable contract of any kind.
+easyJet Airline Company Limited is a British low-cost short-haul carrier registered in England (company number 03034606, registered office Hangar 89, London Luton Airport, Luton, Bedfordshire, LU2 9PF), flying a point-to-point network that its own trade pages describe as connecting more than 155 airports across 35 countries. Its home market is the United Kingdom and its commercial centre of gravity is intra-European leisure and short-haul business traffic, extended by the easyJet holidays package business and by ancillary products (seat selection, hold and large cabin bags, Flex, Pass Extra, Smart+, Inclusive and Inclusive Plus fare bundles). easyJet sits at the direct end of the airline distribution chain. It was built without a GDS dependency and still sells the overwhelming majority of its seats through its own website and app; agency and OTA access exists but is a controlled secondary channel rather than the primary rail. That channel is governed by a published Distribution Charter (version March 2026) which permits a Reseller to access easyJet Data in exactly two ways — "via an easyJet Approved Channel which has entered into an API agreement with easyJet" or "directly via the easyJet API, if the Reseller has a Direct API Agreement with easyJet" — and which explicitly forbids screen scraping and any other automated extraction. easyJet publishes the list of Approved Channels and a per-partner functionality matrix current to the end of May 2026: Amadeus, Anaxys, Bewotec, Duffel, JFA Systems, Kyte, Paxport, Peakwork, Sabre, Travelfusion, Travelport, Traveltek, Viaxoft and Ypsilon. Its API posture, stated honestly, is commercial-agreement-gated and undocumented. There is no developer portal — developer, developers, docs, apis, ndc, partner, partners, trade, agent, sandbox, dev, portal, connect and xml subdomains of easyjet.com all fail to resolve — and no machine-readable contract of any kind is published: no OpenAPI, no Swagger, no AsyncAPI, no GraphQL schema, no security.txt, no llms.txt and no .well-known API catalogue. Two real API hostnames do exist, api.easyjet.com and b2b.easyjet.com, but both sit behind Akamai and return HTTP 403 Access Denied on every path probed. Just as importantly, easyJet is not an NDC carrier: the March 2026 charter never mentions NDC, easyJet does not appear on ndctracker.com's list of 73 airlines with launched or in-development NDC programmes, and its aggregators describe the connection as a direct-connect API rather than an NDC one — Duffel labels it "Direct Connect". A reseller therefore integrates against a bilateral, proprietary, unpublished interface under an English-law contract that easyJet may amend without notice and under which it reserves the right to restrict, suspend or terminate access and to cancel bookings already made. A second enrichment pass on 2026-07-28 did find one live, anonymously reachable easyJet integration surface the first pass missed: the easyWidget / easyDom partner component platform at brand.easyjet.com, a hosted JavaScript widget service that partner and white-label sites embed for easyJet page chrome and for easyJet customer sign-in, registration and visitor recognition. It is undocumented, partner-scoped by a query-string partner identifier and built on legacy jQuery, but it is real and it is the only easyJet interface that answers a stranger with a 200. The REST hostnames stay closed, and this record stays honest about the difference: only what can be verified is catalogued, and an Akamai-gated hostname is still not listed as an API.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/easyjet/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/easyjet/refs/heads/main/apis.yml)
+**Areas:** Travel · United Kingdom · Aviation · Airlines · Low Cost Carrier · Europe · Distribution · Booking · Ancillaries
 
-## Tags
+## easyJet on APIs.io
 
-- Travel
-- United Kingdom
-- Aviation
-- Airline
-- Low Cost Carrier
-- Europe
-- Distribution
-- Booking
-- Ancillaries
-- Partner Gated
+Everything profiled for easyJet is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/easyjet/](https://apis.io/providers/easyjet/)** — or go straight to one of the APIs or properties below.
 
-## Timestamps
+### APIs (1)
 
-- **Created:** 2026-07-28
-- **Modified:** 2026-07-28
+- [easyJet Brand Widget Service (easyDom)](https://apis.io/apis/easyjet/brand-widgets/) — easyJet's hosted client-side widget platform for partner and white-label sites. Each widget is a script tag on brand.easyjet.com whose behaviour is driven…
 
-## APIs
+### Published properties
 
-"the easyJet API" is named in easyJet's own Distribution Charter and is demonstrably in production — fourteen approved aggregators sell easyJet flights and ancillaries against it — but easyJet publishes no reference documentation, no OpenAPI or Swagger definition, no AsyncAPI or GraphQL schema, no authentication metadata and no rate limits. Two real API hostnames exist, `api.easyjet.com` and `b2b.easyjet.com`; both are fronted by Akamai and return HTTP 403 "Access Denied" on every path probed. Listing either as an API would be fabrication, so neither is listed.
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-One surface **is** listed, found on the second enrichment pass (2026-07-28):
+#### Security (1)
 
-- **easyJet Brand Widget Service (easyDom)** — `https://brand.easyjet.com/en/`. easyJet's hosted client-side widget platform for partner and white-label sites. `Header.js` and `Footer.js` answer anonymously with HTTP 200 and real JavaScript; `Script.js`, `SignIn.js`, `Registration.js` and `VRPanel.js` are partner-scoped by a `partner` query-string identifier and return a zero-byte body to an unrecognised caller. Behind them sits the `easyDom` library — `AuthenticationControl`, `AuthenticationHandler`, `RegistrationControl`, three authentication methods (Redirect, Dialog, Embedded), two styles (Classic, Modern), thirteen callback events and a `{Success, Result, ReturnUri, ErrorMessage}` result envelope. It is undocumented, unversioned, unsupported and built on jQuery 1.7.2, and it is not a data API — no flight search, booking or ancillary operation is exposed. It is nonetheless the only easyJet interface that answers a stranger with a 200, and the parameter and callback contract in [`components/easyjet-components.yml`](components/easyjet-components.yml) was read verbatim off easyJet's own publicly indexed sample partner implementation rather than inferred.
+Authentication, trust centre, and vulnerability disclosure.
 
-## Artifacts
+- [Easyjet Domain Security](https://apis.io/security/easyjet/easyjet-domain-security/)
 
-- [`components/easyjet-components.yml`](components/easyjet-components.yml) — the easyWidget / easyDom component catalogue: hosts, widgets, parameters, library objects, events, result envelope, observed authentication model and gaps.
-- [`conformance/easyjet-conformance.yml`](conformance/easyjet-conformance.yml) — standards posture. Fifteen standards assessed, recorded as verified negative or unknown evidence: no NDC, no OpenTravel/OTA, no OpenAPI, no GraphQL, no AsyncAPI, no WSDL, no RFC 9457, no RFC 9116, no RFC 9727, no llms.txt, no MCP; OAuth2 and OIDC unknowable because the hosts 403 before any metadata is served.
-- [`security/easyjet-domain-security.yml`](security/easyjet-domain-security.yml) — TLS, HSTS, DNSSEC, CAA, SPF and DMARC across six easyJet hosts. TLS 1.3 everywhere, HSTS nowhere, no DNSSEC and no CAA, DMARC at `p=reject` with `sp=reject`.
-- [`well-known/easyjet-well-known.yml`](well-known/easyjet-well-known.yml) — the `/.well-known/` probe record across five hosts. Zero documents found.
-- [`llms/easyjet-llms.txt`](llms/easyjet-llms.txt) — generated llms.txt (easyJet serves none; `/llms.txt` is a 404).
+## Where to find this API
 
-## Distribution
-
-easyJet is **not** an NDC carrier. The Distribution Charter (version March 2026) never mentions NDC, easyJet does not appear on ndctracker.com's list of 73 airlines with launched or in-development NDC programmes, and its approved channels describe the link as a direct-connect proprietary API — Duffel labels it "Direct Connect". easyJet never needed IATA's remedy for GDS intermediation because it never had a GDS dependency to escape; it solved the same commercial problem a decade earlier with its own API and a charter.
-
-Agency access runs through the fourteen Approved Channels named at [easyjet.com/en/business/approved-channels-](https://www.easyjet.com/en/business/approved-channels-), each of which holds an API agreement with easyJet, or through a bilateral Direct API Agreement:
-
-| Approved channel | Full nine-capability coverage (as of end May 2026) |
-| --- | --- |
-| Amadeus | No — missing Flex, Pass Extra, Smart+ |
-| Anaxys | No |
-| Bewotec | No |
-| Duffel | No — missing Flex, Pass Extra |
-| JFA Systems | No |
-| Kyte | Yes |
-| Paxport | Yes |
-| Peakwork | No |
-| Sabre | No — missing Flex, Pass Extra |
-| Travelfusion | Yes |
-| Travelport | No — missing Flex, Pass Extra, Smart+ |
-| Traveltek | No |
-| Viaxoft | Listed |
-| Ypsilon | No |
-
-## Switching cost
-
-- **Interface shape:** proprietary-undocumented. No standard is referenced — no NDC, no OpenTravel/OTA, no OpenAPI. An easyJet integration is reusable against nothing else.
-- **Second source:** alternatives-with-migration. There is no second source for easyJet's own inventory, but fourteen approved channels are alternative routes to it — with materially different content coverage, so switching is a re-integration project plus a coverage regression.
-- **Exit path:** export-on-request. UK GDPR Article 20 data portability, scoped in the privacy notice to "your flight and holiday history", requested via the online privacy notice or `data.protection@easyJet.com`. No bulk export operation, and nothing published for resellers.
-- **Identifier portability:** IATA airport codes and the EZY flight designator travel; the six-character easyJet booking reference does not, and no mapping to a GDS record locator or IATA ticket number is published.
-- **Contractual lock-in:** the Distribution Charter is published and citable. easyJet "may amend the Distribution Charter from time to time, without notice", and reserves the right to restrict, suspend or terminate a reseller's access **and cancel bookings already made**. Governed by the laws of England and Wales. Commercial terms — term, fees, exclusivity, notice — are not published anywhere.
-- **Access gate:** commercial-agreement. Either a Direct API Agreement with easyJet (no published application route, contact, pricing or eligibility criteria) or the contract of an Approved Channel. No self-serve signup, no sandbox, no trial.
-
-Full evidence, including every URL probed with its HTTP status and the verbatim charter clauses, is in [`review.yml`](review.yml).
-
-## Common Properties
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
 - [Website](https://www.easyjet.com/)
-- [Distribution charter (version March 2026)](https://www.easyjet.com/en/business/distribution-charter)
-- [Approved aggregator and GDS channels](https://www.easyjet.com/en/business/approved-channels-)
-- [Travel trade partners hub](https://www.easyjet.com/en/business/travel-trade-partners)
-- [Acceptable use policy](https://www.easyjet.com/en/policy/acceptable-use)
-- [Privacy notice](https://www.easyjet.com/en/policy/privacy)
-- [Terms and conditions](https://www.easyjet.com/en/terms-and-conditions)
-- [Help Centre](https://www.easyjet.com/en/help)
-- [Create a myeasyJet account](https://www.easyjet.com/en/register)
-- [Business fares](https://www.easyjet.com/en/business/business-fares)
-- [LinkedIn](https://www.linkedin.com/company/easyjet)
-- [Careers](https://careers.easyjet.com/)
-- [Investor relations](https://corporate.easyjet.com/)
+- [Sign up](https://www.easyjet.com/en/register)
+- [Support](https://www.easyjet.com/en/help)
+- [Terms of service](https://www.easyjet.com/en/terms-and-conditions)
+- [Privacy policy](https://www.easyjet.com/en/policy/privacy)
 
-## Maintainers
+## API Evangelist rating
 
-- Kin Lane — kin@apievangelist.com
+**Kin Score 13.7** — emerging · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 66.1 |
+| Contract quality | 0.0 |
+| Contract governance | 0.0 |
+| Operational transparency | 0.0 |
+| Developer ergonomics | 4.8 |
+| Access clarity | 34.2 |
+
+**Agent readiness 0.0** — human-only
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | — |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | — |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | — |
+| Rate Limit Signal | — |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 15.8** — Telecommunications
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/easyjet/](https://apis.io/providers/easyjet/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for easyJet: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/easyjet/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
